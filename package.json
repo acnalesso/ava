@@ -1,0 +1,23 @@
+{
+  "name": "the-notifier",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js",
+    "build": "rm -r ./dist/ && mkdir -p ./dist/js && mkdir ./dist/css && cp ./app/index.html ./dist && cp ./app/css/index.css ./dist/css && browserify -t [ babelify --presets [ es2015 react ] ] ./app/index.js -o ./dist/js/index.js"
+  },
+  "author": "acnalesso@yahoo.co.uk",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "babelify": "^7.2.0"
+  },
+  "dependencies": {
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3"
+  }
+}
