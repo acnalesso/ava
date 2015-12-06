@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import WordOfTheDay from "../../../app/components/WordOfTheDay";
 import WordOfTheDayActions from "../../../app/actions/WordOfTheDayActions";
 import VoiceActions from "../../../app/actions/VoiceActions";

@@ -1,5 +1,17 @@
 import jsdom from 'jsdom';
+import sinon from "sinon";
+import sinonChai from "sinon-chai";
+import chai from "chai";
+
 const React = require("../../app/vendor/react-with-addons");
+
+chai.use(sinonChai);
+global.expect = chai.expect;
+
+global.responsiveVoice = {
+  AddEventListener: () => {
+  }
+};
 
 global.TestUtils = React.addons.TestUtils;
 

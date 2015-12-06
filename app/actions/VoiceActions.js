@@ -2,9 +2,10 @@ import alt from "../alt";
 
 class VoiceActions {
   constructor() {
-    this.generateActions(
-      'play'
-    );
+  }
+
+  play(payload) {
+    setTimeout(() => { this.dispatch(payload); }, 0);
   }
 }
 
