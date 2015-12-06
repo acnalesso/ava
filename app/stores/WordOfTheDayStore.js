@@ -7,12 +7,12 @@ class WordOfTheDayStore {
 
     this.state = {
       word: "",
-      description: ""
+      note: ""
     };
   }
 
   onReceivePayload(payload) {
-    this.setState(payload.data);
+    this.setState({word: payload.data.word, note: payload.data.note });
   }
 }
 

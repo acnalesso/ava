@@ -14,14 +14,14 @@ export default class WordOfTheDay extends React.Component {
   }
 
   handleWordOfTheDay(store) {
-    this.setState({ word: store.word, description: store.note });
+    this.setState({ word: store.word, note: store.note });
   }
 
   render() {
     return(
       <div>
         <h1>The word of the day is: {this.state.word}</h1>
-        <h2>Description: {this.state.description}</h2>
+        <h2>Description: {this.state.note}</h2>
       </div>
     );
   }

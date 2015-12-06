@@ -1,17 +1,39 @@
 import jsdom from 'jsdom';
-import React from "react";
-import TestUtils from "react-addons-test-utils";
+const React = require("../../app/vendor/react-with-addons");
 
-const shallowRenderer = TestUtils.createRenderer();
+global.TestUtils = React.addons.TestUtils;
+
+const shallowRenderer = global.TestUtils.createRenderer();
 
 global.React = React;
-global.TestUtils = TestUtils;
-global.renderIntoShallowDOM = (component) => {
-  shallowRenderer.render(component);
-  return shallowRenderer.getRenderOutput();
-};
 global.before = (callback) => {
   callback();
+};
+
+global.mount = () => {
+  return shallowRenderer;
+};
+
+global.getMountedInstance = () => {
+  return shallowRenderer._instance._instance;
+};
+
+global.setState = (options) => {
+  return global.getMountedInstance().setState(...options);
+};
+
+global.renderedComponent = () => {
+  return shallowRenderer.getRenderOutput();
+};
+
+global.getMountedInstance = () => {
+  return shallowRenderer.getMountedInstance();
+};
+
+global.renderIntoShallowDOM = (component) => {
+  shallowRenderer.render(component);
+  shallowRenderer.getMountedInstance().componentDidMount();
+  return shallowRenderer.getRenderOutput();
 };
 
 global.findElementWithTag = (component, tag, index = 0) => {

@@ -1,22 +1,22 @@
 import { expect } from "chai";
-import TestUtils from "react-addons-test-utils";
 import WordOfTheDay from "../../../app/components/WordOfTheDay";
 import WordOfTheDayActions from "../../../app/actions/WordOfTheDayActions";
+import VoiceActions from "../../../app/actions/VoiceActions";
+
 const shallowRenderer = TestUtils.createRenderer();
 
 describe('WordOfTheDay', () => {
 
   let renderedComponent;
-  const Component = <WordOfTheDay />;
   before(() => {
     WordOfTheDayActions.receivePayload({
       data: {
         word: 'word-of-the-day-here',
-        description: 'description'
+        note: 'meaning'
       }
     });
 
-    renderedComponent = renderIntoShallowDOM(Component);
+    renderedComponent = renderIntoShallowDOM(<WordOfTheDay />);
   });
 
   it('shows the word of the day', () => {
@@ -24,8 +24,23 @@ describe('WordOfTheDay', () => {
     expect(text).to.contain('word-of-the-day-here');
   });
 
-  it('shows its description', () => {
-    const description = getTextOfTag(renderedComponent, 'h2');
-    expect(description).to.contain('description');
+  it('shows its meaning', () => {
+    const note = getTextOfTag(renderedComponent, 'h2');
+    expect(note).to.contain('meaning');
   });
+
+  it('sets state when word of the day changes', () => {
+    WordOfTheDayActions.receivePayload({
+      data: {
+        word: 'new-word',
+        note: 'new-meaning'
+      }
+    });
+
+    var newlyRenderedComponent = getMountedInstance();
+
+    expect(newlyRenderedComponent.state.word).to.eq('new-word');
+    expect(newlyRenderedComponent.state.note).to.eq('new-meaning');
+  });
+
 });
