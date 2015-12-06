@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'ava'
+  src: url('/fonts/neuropol_x_rg.ttf');
+}
+
+html, head, body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #fff;
+  font-family: ava, monospace;
+}
+
+
+.news-section-title: {
+  font-size: 18px;
+}

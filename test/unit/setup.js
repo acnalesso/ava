@@ -4,6 +4,7 @@ import sinonChai from "sinon-chai";
 import chai from "chai";
 
 const React = require("../../app/vendor/react-with-addons");
+let shallowRenderer;
 
 chai.use(sinonChai);
 global.expect = chai.expect;
@@ -15,15 +16,9 @@ global.responsiveVoice = {
 
 global.TestUtils = React.addons.TestUtils;
 
-const shallowRenderer = global.TestUtils.createRenderer();
-
 global.React = React;
 global.before = (callback) => {
   callback();
-};
-
-global.mount = () => {
-  return shallowRenderer;
 };
 
 global.getMountedInstance = () => {
@@ -43,12 +38,20 @@ global.getMountedInstance = () => {
 };
 
 global.renderIntoShallowDOM = (component) => {
+  shallowRenderer = global.TestUtils.createRenderer();
+
   shallowRenderer.render(component);
-  shallowRenderer.getMountedInstance().componentDidMount();
+  if (shallowRenderer.getMountedInstance().componentDidMount) {
+    shallowRenderer.getMountedInstance().componentDidMount();
+  }
   return shallowRenderer.getRenderOutput();
 };
 
 global.findElementWithTag = (component, tag, index = 0) => {
+  if (index > component.length) {
+    throw(`Could not find rendered component with tag: ${tag}. Make sure you have it defined in your render method!`);
+  }
+
   if (component.type === tag) {
     return component;
   }
@@ -66,24 +69,58 @@ global.findElementWithTag = (component, tag, index = 0) => {
   }
 };
 
-global.getText = (component, index = 0) => {
-  if (component.props && typeof(component.props.children) === "string") {
-    return component.props.children;
+global.findElementWithId = (component, id, index = 0) => {
+  if (index > component.length) {
+    throw(`Could not find rendered component with id: ${id}. Make sure you have it defined in your render method!`);
   }
 
-  if (component && component[index] && typeof(component[index]) === "string") {
-    return component.join("");
+  if (component.props && component.props.id === id) {
+    return component;
+  }
+
+  if (component[index] && component[index].props && component[index].props.id === id) {
+    return component[index];
   } else {
     index++;
   }
 
   if (Object.prototype.toString.call(component) === '[object Array]') {
-    return global.getText(component, index++);
+    return global.findElementWithId(component, id, index++);
   } else {
-    return global.getText(component.props.children, 0);
+    return global.findElementWithId(component.props.children, id, 0);
   }
 };
 
+global.findElementWithClass = (component, className, index = 0) => {
+  if (index > component.length) {
+    throw(`Could not find rendered component with class: ${className}. Make sure you have it defined in your render method!`);
+  }
+
+  if (component.props && component.props.className === className) {
+    return component;
+  }
+
+  if (component[index] && component[index].props && component[index].props.className === className) {
+    return component[index];
+  } else {
+    index++;
+  }
+
+  if (Object.prototype.toString.call(component) === '[object Array]') {
+    return global.findElementWithClass(component, className, index++);
+  } else {
+    return global.findElementWithClass(component.props.children, className, 0);
+  }
+};
+
+global.getText = (component) => {
+  return component.props.children;
+}
+
 global.getTextOfTag = (component, tag) => {
   return global.getText(global.findElementWithTag(component, tag));
+};
+
+global.getTextOfClass = (component, className) => {
+  return global.getText(global.findElementWithClass(component, className));
 };

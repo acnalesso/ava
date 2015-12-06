@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "npm run build && node server.js",
-    "build": "rm -r ./dist/ && mkdir -p ./dist/js && mkdir ./dist/css && cp ./app/index.html ./dist && cp ./app/css/index.css ./dist/css && browserify -t [ babelify --presets [ es2015 react ] ] ./app/index.js -o ./dist/js/index.js",
+    "build": "rm -r ./dist/ && mkdir -p ./dist/js && mkdir ./dist/css  && cp ./app/index.html ./dist && cp ./app/css/index.css ./dist/css && cp -r ./app/css/fonts ./dist/fonts && browserify -t [ babelify --presets [ es2015 react ] ] ./app/index.js -o ./dist/js/index.js",
     "test": "./node_modules/.bin/mocha --require test/unit/setup.js --compilers js:babel-core/register test/unit/**/*"
   },
   "author": "acnalesso@yahoo.co.uk",
@@ -28,6 +28,7 @@
   "dependencies": {
     "alt": "^0.17.9",
     "axios": "^0.7.0",
+    "html-to-react": "^0.1.1",
     "jsdom": "^3.1.2",
     "react-dom": "^0.14.3"
   }
