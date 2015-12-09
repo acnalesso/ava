@@ -4,19 +4,15 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "acnalesso@yahoo.co.uk",
   "license": "MIT",
-  "devDependencies": {
-    "express": "^4.13.3",
-    "express-cors": "0.0.3",
-    "superagent": "^1.5.0",
-    "xml2json": "^0.9.0"
-  },
   "dependencies": {
     "axios": "^0.7.0",
-    "unescape": "^0.1.1"
+    "unescape": "^0.1.1",
+    "express": "^4.13.3",
+    "express-cors": "0.0.3",
+    "xml2json": "^0.9.0"
   }
 }
