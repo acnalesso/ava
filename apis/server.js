@@ -12,6 +12,17 @@ var allowCrossDomain = function (req, res, next) {
 
 App.use(allowCrossDomain);
 
+App.get('/stopBoard/:busStopId', function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  var busStopId = req.params['busStopId'];
+
+  return res.send('{"lastUpdated":"20:49","filterOut":[],"arrivals":[{"routeId":"77","routeName":"77","destination":"Waterloo","estimatedWait":"8 min","scheduledTime":"19:58","isRealTime":true,"isCancelled":false},{"routeId":"77","routeName":"77","destination":"Waterloo","estimatedWait":"19 min","scheduledTime":"20:08","isRealTime":true,"isCancelled":false}],"serviceDisruptions":{"infoMessages":[],"importantMessages":[],"criticalMessages":[]}}');
+
+  axios.get('http://countdown.tfl.gov.uk/stopBoard/' + busStopId).then(function (response) {
+    res.send(response.data);
+  });
+});
+
 App.get('/google/news', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
 
